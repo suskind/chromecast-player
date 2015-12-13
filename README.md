@@ -13,21 +13,20 @@ Download, unzip and open the app
   * Write an [issue](https://github.com/suskind/chromecast-player/issues) 
 
 ## Build the system (To Dev Guys)
-### Install NW.js 
+##### Install NW.js 
   http://nwjs.io (version 0.12.3) 
-### Install Node.js 
-  https://nodejs.org/ 
-### Clone this repo 
+  
+##### Clone this repo 
   ```bash 
   git clone https://github.com/suskind/chromecast-player.git 
   cd chromecast-player 
   ```
-### Run to install dependencies 
+##### Run to install dependencies 
    ```bash
   ./install_dev_stuff.sh 
   ```
   (this will install nw-gyp globaly to rebuild mdns module) 
-### Run App 
+##### Run App 
   ```bash
   cd app 
   /path/to/nwjs .
