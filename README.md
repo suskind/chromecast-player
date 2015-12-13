@@ -3,6 +3,8 @@ Desktop app to play media files to chromecast.
 
 ## Install app 
 
+Download, unzip and open the app
+
  * [Mac OSX - x64](https://meocloud.pt/link/613af3e8-843f-4bc2-aa18-12c2bc409692/ChromeCastPlayer.app-mac-x64-v0.1.1.zip/)  (Version 0.1.1 - alpha of alpha version) 
  * [Linux - x64](#) (Soon)
  * [Windows - x64] (#) (Soon)  
