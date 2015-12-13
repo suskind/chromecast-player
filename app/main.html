@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>ChromeCast Player</title>
+    <meta name="description" content="">
+    <meta name="author" content="ink, cookbook, recipes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <link rel="stylesheet" type="text/css" href="css/ink-flex.min.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+
+    <script type="text/javascript" src="js/ink.js"></script>
+
+    <style type="text/css">
+body {
+    background-color: #FFF;
+}
+#time-bar {
+background-color: #CCC; 
+height:8px; 
+position:relative;
+}
+#time-bar-icon{
+position:absolute; 
+top:-4px;
+}
+
+#time-bar-tooltip {
+position: absolute;
+z-index: 5;
+width: 50px;
+height: 15px;
+font-size: 10px;
+color: #000;
+background-color: #DDD;
+top: -18px; 
+left: 50%;
+border: 0px solid red;
+margin: 0;
+margin-left: -25px;
+padding: 3px;
+display: none;
+}
+
+#time-bar:hover #time-bar-tooltip {
+display: block; 
+}
+
+.table-playlist-container {
+overflow: auto;
+position:absolute; 
+bottom: 55px; 
+left: 30px; 
+right: 30px; 
+top: 140px;
+height:auto; 
+}
+
+#playlist-container tr.green a {
+    color: #FFF;
+    cursor: pointer;
+}
+#playlist-container td.pl-column-remove {
+    width: 20px;
+}
+
+#remote-server-container {
+height: 47px;
+background-color: #CCC;
+margin: 0;
+padding: 0;
+padding-top: 5px;
+position:absolute;
+bottom: 0;
+left: 0;
+right: 0;
+}
+#remote-server-qrcode-container {
+position:absolute;
+bottom: 47px;
+right: 0;
+left: 0;
+}
+.button-qr-code {
+padding: 3px 7px;
+}
+
+.button-qrcode-icon {
+    font-size: 30px; padding:0;
+}
+
+    </style>
+
+  </head>
+  <body>
+    <div class="ink-grid">
+        <div class="column-group">
+            <div class="all-100 align-center">
+                <nav class="ink-navigation">
+                    <ul class="menu horizontal black">
+                        <li>
+                            <a href="#">Play to ChromeCast: <span id="cur-chromecast-playing">N/A</span></a>
+                            <ul class="submenu" id="chromecasts-list">
+                                <li><a href="#">Searching...</a></li>
+                                <!--<li data-chromecast-address="192.168.1.xxx"><a href="#">Searching...</a></li>-->
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="all-20 align-left small" id="time-from-start">00:00:00</div>
+            <div class="all-60"></div>
+            <div class="all-20 align-right small" id="time-total">00:00:00</div>
+            <div class="all-100" id="time-bar">
+                <span id="time-bar-icon" class="fa fa-circle"></span>
+                <div id="time-bar-tooltip" class="align-center">00:00:00</div>
+            </div>
+            <!-- <div class="all-100">&nbsp;</div> --> 
+            <div class="button-toolbar push-center" id="player-controls-container">
+                <div class="button-group">
+                    <button type="button" class="ink-button extralarge" data-player-control="open-file" title="Open media files"><span class="fa fa-folder-open"></span></button>
+                    <button type="button" class="ink-button extralarge" data-player-control="open-link" title="Add media URL"><span class="fa fa-link"></span></button>
+                    <button type="button" class="ink-button extralarge" data-player-control="open-youtube" title="Add youtube URL (Not implemented yet)" disabled><span class="fa fa-youtube"></span></button>
+                    <button type="button" class="ink-button extralarge" data-player-control="open-magnet" title="Add magnet URL (Not implemented yet)" disabled><span class="fa fa-magnet"></span></button>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="ink-button extralarge" data-player-control="playlist-backward" title="Play previous in playlist"><span class="fa fa-fast-backward"></span></button>
+                    <button type="button" class="ink-button extralarge" data-player-control="backward" title="Seek backward (10s)"><span class="fa fa-backward"></span></button>
+                    <button type="button" class="ink-button extralarge" data-player-control="playpause" title="Play/Pause"><span class="fa fa-play" id="player-control-playpause"></span></button>
+                    <button type="button" class="ink-button extralarge" data-player-control="forward" title="Seek forward (10s)"><span class="fa fa-forward"></span></button>
+                    <button type="button" class="ink-button extralarge" data-player-control="playlist-forward" title="Play next in playlist"><span class="fa fa-fast-forward"></span></button>
+                    <button type="button" class="ink-button extralarge" data-player-control="stop" title="Stop"><span class="fa fa-stop"></span></button>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="ink-button extralarge" data-player-control="subtitles" title="To enable subtitles put .srt file with the same name in the same video folder" disabled><span class="fa fa-strikethrough"></span></button>
+                </div>
+            </div>
+            <div class="_all-100 table-playlist-container"> 
+                <table class="ink-table alternating hover">
+                  <thead>
+                    <tr>
+                      <th class="align-center" colspan="2">Playlist</th>
+                    </tr>
+                  </thead>
+                  <tbody id="playlist-container">
+                  <!--
+                    <tr data-playlist-row-id="_id_">
+                      <td class="small">Sample_File_name.mp4</td>
+                      <td class="pl-column-remove"><a href="#" data-remove-from-playlist title="remove"><span class="fa fa-trash small"></span></a></td>
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td></td>
+                    </tr>
+                    <tr> <td>2</td> <td></td> </tr>
+                    <tr> <td>2</td> <td></td> </tr>
+                    <tr> <td>2</td> <td></td> </tr>
+                    <tr> <td>2</td> <td></td> </tr>
+                    <tr> <td>2</td> <td></td> </tr>
+                    <tr> <td>2</td> <td></td> </tr>
+                    <tr> <td>2</td> <td></td> </tr>
+                    <tr> <td>2</td> <td></td> </tr>
+                    <tr> <td>2</td> <td></td> </tr>
+                    <tr> <td>2</td> <td></td> </tr>
+                    -->
+                  </tbody>
+                </table>
+            </div>
+            <div class="all-50 push-center align-center hide-all" id="remote-server-qrcode-container">
+                <img id="remote-server-qrcode-image" src="http://qrfree.kaywa.com/?l=1&s=8&d=http%3A%2F%2Fpdvel.com%2F" alt="Access to remote control scaning this QR Code">
+            </div>
+            <div class="all-100 align-center small closed" id="remote-server-container">
+                Control remotely with this URL: <a href="#" id="remote-server-address-link"><span id="remote-server-address"></span></a><button class="ink-button button-qr-code" title="Click to open QR Code"><span class="fa fa-qrcode large button-qrcode-icon"></span></button> 
+            </div>
+            <div class="all-100 hide-all">
+            <input type="file" id="input-local-file" multiple accept=".mp4,.avi,.mkv,.webm,.m4v,.mp3,.m4a,.weba,.ogg,.jpg,.jp3g,.mov" />
+            </div>
+        </div>
+    </div>
+<script type="text/javascript" src="main.js"></script>
+
+<script type="text/javascript">
+
+</script>
+
+  </body>
+</html>

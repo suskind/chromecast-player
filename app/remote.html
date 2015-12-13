@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>ChromeCast Player - Remote control</title>
+
+    <meta name="description" content="">
+    <meta name="author" content="ink, cookbook, recipes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <link rel="stylesheet" type="text/css" href="/remote/css/ink-flex.min.css">
+    <link rel="stylesheet" type="text/css" href="/remote/css/font-awesome.min.css">
+    <!--
+    <link rel="stylesheet" type="text/css" href="/remote/css/ink-flex.min.css">
+    <link rel="stylesheet" type="text/css" href="http://ink.web.sapo.io/3.1.10/css/font-awesome.min.css">
+    -->
+
+    <script type="text/javascript" src="/remote/js/ink.js"></script>
+    <script type="text/javascript" src="/remote/js/socket.io-1.2.0.js"></script>
+<style type="text/css">
+#player-controls-container {
+    border:1px solid black; 
+    background-color: #696969; 
+    _border-radius: 150px;
+}
+button.ink-button[data-player-control] {
+    margin-left: 5px;
+    margin-right: 5px;
+
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    text-align: center;
+}
+button.ink-button[data-player-control=playpause] {
+    width: 100px;
+}
+#playlist-container tr.green a {
+        color: #FFF;
+                   cursor: pointer;
+}
+#playlist-container td.pl-column-remove {
+        width: 5px;
+}
+</style>
+</head>
+<body>
+
+<div class="ink-grid">
+    <div class="column-group">
+        <div class="all-100 align-center">
+            <h1>ChromeCast Player<br />
+            <span class="small">Remote control</span>
+            </h1>
+        </div>
+        <div class="all-100 align-center hide-all">
+            <select id="chromecasts-list" class="push-center">
+                <option>N/A</option>
+            </select>
+        </div>
+    </div>
+    <div class="all-100 xlarge-50 large-50 push-center" id="player-controls-container" >
+        <div class="column-group">
+            <div class="_button-toolbar push-center vertical-space">
+                <div class="_button-group">
+                    <button type="button" class="ink-button extralarge" data-player-control="backward"><span class="fa fa-backward"></span></button>
+                    <button type="button" class="ink-button extralarge" data-player-control="playpause"><span class="fa fa-play" id="player-control-play"></span>/<span class="fa fa-pause" id="player-control-pause"></span></button>
+                    <button type="button" class="ink-button extralarge" data-player-control="forward"><span class="fa fa-forward"></span></button>
+                </div>
+            </div>
+        </div>
+        <div class="column-group">
+            <div class="_button-toolbar push-center vertical-space">
+                <div class="_button-group">
+                    <button type="button" class="ink-button extralarge" data-player-control="playlist-backward"><span class="fa fa-fast-backward"></span></button>
+                    <button type="button" class="ink-button extralarge" data-player-control="stop"><span class="fa fa-stop"></span></button>
+                    <button type="button" class="ink-button extralarge" data-player-control="playlist-forward"><span class="fa fa-fast-forward"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="column-group">
+        <div class="all-100 xlarge-50 large-50 push-center _align-center">
+            <table class="ink-table alternating hover">
+                <thead>
+                    <tr>
+                        <th class="align-center" colspan="2">Playlist</th>
+                    </tr>
+                </thead>
+                <tbody id="playlist-container">
+                    <!--
+                    <tr data-playlist-row-id="_id_">
+                        <td class=""><a href="#play" class="all-100" title="Sample_File_name.mp4">Sample_File_name.mp4</a></td>
+                        <td class="pl-column-remove"></td>
+                    </tr>
+                    -->
+                </tbody>
+            </table>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript" src="/remote/js/remote.js"></script>
+
+</body>
+</html>
