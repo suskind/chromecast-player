@@ -61,12 +61,40 @@ top: 140px;
 height:auto; 
 }
 
+#playlist-container tr a {
+display:block;
+}
 #playlist-container tr.green a {
     color: #FFF;
     cursor: pointer;
 }
 #playlist-container td.pl-column-remove {
     width: 20px;
+}
+
+td.pl-column-remove ul.menu-playlist-item-options {
+position:absolute;
+         z-index: 10;
+width: 200px;
+border: 1px solid red;
+background-color: #f5f5f5;
+right: 20px;
+display: none;
+         margin-top: -10px;
+}
+td.pl-column-remove:hover ul.menu-playlist-item-options {
+display: block;
+}
+td.pl-column-remove ul.menu-playlist-item-options li{
+    font-size: 13px;
+padding: 3px;
+margin: 0;
+}
+td.pl-column-remove ul.menu-playlist-item-options li a{
+display: block;
+}
+td.pl-column-remove ul.menu-playlist-item-options li a:hover {
+    background-color: #fefbd6;
 }
 
 #remote-server-container {
@@ -104,7 +132,7 @@ padding: 3px 7px;
                 <nav class="ink-navigation">
                     <ul class="menu horizontal black">
                         <li>
-                            <a href="#">Play to ChromeCast: <span id="cur-chromecast-playing">N/A</span></a>
+                            <a href="#">Play to ChromeCast: <span id="cur-chromecast-playing">N/A</span> <span class="fa fa-chevron-down"></span></a>
                             <ul class="submenu" id="chromecasts-list">
                                 <li><a href="#">Searching...</a></li>
                                 <!--<li data-chromecast-address="192.168.1.xxx"><a href="#">Searching...</a></li>-->
@@ -147,35 +175,42 @@ padding: 3px 7px;
                       <th class="align-center" colspan="2">Playlist</th>
                     </tr>
                   </thead>
-                  <tbody id="playlist-container">
-                  <!--
+                 <tbody id="playlist-container">
+              <script type="text/javascript">
+                    if(typeof(require) !== 'undefined') {
+                        document.write('<script type="text/template">');
+                    }
+              </script>
                     <tr data-playlist-row-id="_id_">
-                      <td class="small">Sample_File_name.mp4</td>
+                      <td class="small"><a href="#play" class="item-to-play all-100">Sample_File_name.mp4</a></td>
                       <td class="pl-column-remove"><a href="#" data-remove-from-playlist title="remove"><span class="fa fa-trash small"></span></a></td>
                     </tr>
-                    <tr>
-                      <td>1</td>
-                      <td></td>
+                    <tr data-playlist-row-id="_id_" class="green">
+                      <td class="small"><a href="#play" class="item-to-play all-100">Sample_File_name.mp4 (a tocar)</a></td>
+                      <td class="pl-column-remove"><a href="#" data-remove-from-playlist title="remove"><span class="fa fa-trash small"></span></a></td>
                     </tr>
-                    <tr>
-                      <td>2</td>
-                      <td></td>
+                    <tr data-playlist-row-id="_id_">
+                      <td class="small"><a href="#play" class="item-to-play all-100">Ideia com o &quot;pincho&quot; do lado direito com as opcoes</a></td>
+                      <td class="pl-column-remove"><a href="#"><span class="fa fa-ellipsis-v"></span></a>
+                        <ul class="unstyled menu-playlist-item-options">
+                        <li><a href="#" data-add-subtitles title="Add subtitles">Add subtitles</a></li>
+                        <li><a href="#" data-remove-from-playlist title="Remove item">Remove</a></li>
+                        </ul>
+                      </td>
                     </tr>
-                    <tr>
-                      <td>2</td>
-                      <td></td>
+                    <tr data-playlist-row-id="_id_">
+                      <td class="small"><a href="#play" class="item-to-play all-100">Sample_File_name.mp4</a></td>
+                      <td class="pl-column-remove"><a href="#" data-remove-from-playlist title="remove"><span class="fa fa-trash small"></span></a></td>
                     </tr>
-                    <tr> <td>2</td> <td></td> </tr>
-                    <tr> <td>2</td> <td></td> </tr>
-                    <tr> <td>2</td> <td></td> </tr>
-                    <tr> <td>2</td> <td></td> </tr>
-                    <tr> <td>2</td> <td></td> </tr>
-                    <tr> <td>2</td> <td></td> </tr>
-                    <tr> <td>2</td> <td></td> </tr>
-                    <tr> <td>2</td> <td></td> </tr>
-                    <tr> <td>2</td> <td></td> </tr>
-                    <tr> <td>2</td> <td></td> </tr>
-                    -->
+                    <tr data-playlist-row-id="_id_">
+                      <td class="small"><a href="#play" class="item-to-play all-100">Sample_File_name.mp4</a></td>
+                      <td class="pl-column-remove"><a href="#" data-remove-from-playlist title="remove"><span class="fa fa-trash small"></span></a></td>
+                    </tr>
+              <script type="text/javascript">
+                    if(typeof(require) !== 'undefined') {
+                        document.write('</sc'+'ript>');
+                    }
+              </script>
                   </tbody>
                 </table>
             </div>
