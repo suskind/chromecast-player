@@ -32,3 +32,4 @@ app/testserver.js
 # pixelmator files 
 *.pxm 
 
+.DS_Store
