@@ -20,7 +20,12 @@
     "maintainers":[ {
         "name": "Claudio Gamboa",
         "email": "gamboa@pdvel.com",
-        "web": "http://pdvel.com" 
+        "web": "http://pdvel.com/" 
+    }],
+    "contributors": [{
+        "name": "Nuno Loureiro",
+        "email": "nuno@nloureiro.com",
+        "web": "http://www.nloureiro.com/"
     }],
     "dependencies": {
         "castv2-client": "~1.1.0",
